@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Solicitudes</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<div class="pagina">
+    <div class="tarjeta tarjeta-ancha">
+        <h1>Solicitudes</h1>
+
+        <p class="subtitulo" sec:authorize="hasRole('ADMIN')">
+            Como administrador ves las solicitudes de todas las categorías.
+        </p>
+        <p class="subtitulo" sec:authorize="!hasRole('ADMIN')">
+            <span th:if="${categoriaEmpleado != null}">
+                Estás viendo las solicitudes de la categoría <strong th:text="${categoriaEmpleado}"></strong>.
+            </span>
+            <span th:if="${categoriaEmpleado == null}">
+                Todavía no tienes una categoría asignada. Pídele al administrador que te la asigne.
+            </span>
+        </p>
+
+        <!-- Filtro por prioridad -->
+        <form th:action="@{/solicitudes/todas}" method="get" class="filtro-prioridad">
+            <label for="prioridad">Filtrar por prioridad:</label>
+            <select name="prioridad" id="prioridad">
+                <option value="" th:selected="${prioridadSeleccionada == ''}">Todas</option>
+                <option value="Alta" th:selected="${prioridadSeleccionada == 'Alta'}">Alta</option>
+                <option value="Media" th:selected="${prioridadSeleccionada == 'Media'}">Media</option>
+                <option value="Baja" th:selected="${prioridadSeleccionada == 'Baja'}">Baja</option>
+            </select>
+            <button type="submit">Filtrar</button>
+            <a th:if="${prioridadSeleccionada != ''}" th:href="@{/solicitudes/todas}" class="boton-link">Quitar filtro</a>
+        </form>
+
+        <p th:if="${#lists.isEmpty(solicitudes)}">No hay solicitudes para mostrar.</p>
+
+        <table class="tabla" th:unless="${#lists.isEmpty(solicitudes)}">
+            <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Título</th>
+                <th>Tipo</th>
+                <th>Categorías</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="s : ${solicitudes}">
+                <td th:text="${s.cliente != null ? s.cliente.nombre : '-'}"></td>
+                <td th:text="${s.titulo}"></td>
+                <td th:text="${s.tipoSolicitud != null ? s.tipoSolicitud.nombre : '-'}"></td>
+                <td>
+                    <span th:each="c, it : ${s.categorias}" th:text="${c.nombre + (it.last ? '' : ', ')}"></span>
+                </td>
+                <td th:text="${s.prioridad}"></td>
+                <td>
+                    <span class="badge"
+                          th:classappend="${s.estado == 'ABIERTA'} ? 'badge-abierta' : (${s.estado == 'CERRADA'} ? 'badge-cerrada' : 'badge-proceso')"
+                          th:text="${s.estado}"></span>
+                </td>
+                <td th:text="${#dates.format(s.fechaCreacion, 'dd/MM/yyyy')}"></td>
+                <td><a th:href="@{'/solicitudes/' + ${s.id} + '/gestionar'}" class="boton-link">Gestionar</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

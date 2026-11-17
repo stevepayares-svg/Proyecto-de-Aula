@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegir tipo de acceso - PQRSF</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <style>
+        .selector-rol { max-width: 520px; margin: 30px auto; }
+        .opciones-rol { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 24px; }
+        .opcion-rol { min-height: 125px; padding: 20px; border: 1px solid #d7dce2; border-radius: 12px; background: #fff; cursor: pointer; }
+        .opcion-rol:hover { border-color: #2563eb; box-shadow: 0 4px 14px #00000012; }
+        .opcion-rol strong { display: block; font-size: 1.1rem; margin-bottom: 8px; }
+        .opcion-rol button { width: 100%; margin-top: 12px; }
+        .correo { overflow-wrap: anywhere; color: #555; }
+        @media(max-width: 520px) { .opciones-rol { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+<div class="contenedor selector-rol">
+    <h1>Sistema de Gestión de Solicitudes</h1>
+    <h2>¿Cómo deseas ingresar?</h2>
+    <p>Encontramos este correo registrado como cliente y como empleado.</p>
+    <p class="correo"><strong th:text="${email}">correo@ejemplo.com</strong></p>
+    <p>Selecciona el perfil que deseas utilizar en esta sesión:</p>
+
+    <div class="opciones-rol">
+        <form th:action="@{/elegir-rol}" method="post" class="opcion-rol">
+            <input type="hidden" name="rol" value="CLIENTE">
+            <strong>Ingresar como cliente</strong>
+            <span>Crear y consultar tus solicitudes PQRSF.</span>
+            <button type="submit">Continuar como cliente</button>
+        </form>
+        <form th:action="@{/elegir-rol}" method="post" class="opcion-rol">
+            <input type="hidden" name="rol" value="EMPLEADO">
+            <strong>Ingresar como empleado</strong>
+            <span>Acceder al panel de gestión de solicitudes.</span>
+            <button type="submit">Continuar como empleado</button>
+        </form>
+    </div>
+    <p style="margin-top:22px"><a th:href="@{/login}">Cancelar y volver al inicio</a></p>
+</div>
+</body>
+</html>

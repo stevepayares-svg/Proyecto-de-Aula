@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogos</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<div class="pagina">
+    <div class="tarjeta tarjeta-ancha">
+        <h1>Catálogos del sistema</h1>
+        <p class="subtitulo">Estos son los tipos y categorías que aparecen en el menú de "Nueva Solicitud". Puedes crear, editar y eliminar.</p>
+
+        <h2 style="font-size:1.05em;">Tipos de solicitud</h2>
+        <table class="tabla">
+            <thead><tr><th>Nombre</th><th>Descripción</th><th></th></tr></thead>
+            <tbody>
+            <tr th:each="t : ${tipos}">
+                <td colspan="2">
+                    <form th:action="@{'/admin/catalogos/tipos/' + ${t.id} + '/editar'}" method="post" style="display:flex; gap:8px;">
+                        <input type="text" name="nombre" th:value="${t.nombre}" required style="flex:1;">
+                        <input type="text" name="descripcion" th:value="${t.descripcion}" style="flex:2;">
+                        <button type="submit" class="boton-link">Guardar</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{'/admin/catalogos/tipos/' + ${t.id} + '/eliminar'}" method="post" style="display:inline;"
+                          onsubmit="return confirm('¿Eliminar este tipo?');">
+                        <button type="submit" class="boton-link">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <form th:action="@{/admin/catalogos/tipos}" method="post" class="formulario">
+            <label>Nuevo tipo:</label>
+            <input type="text" name="nombre" placeholder="Ej: Consulta" required>
+            <label>Descripción:</label>
+            <input type="text" name="descripcion">
+            <button type="submit">Agregar tipo</button>
+        </form>
+
+        <h2 style="font-size:1.05em; margin-top:30px;">Categorías</h2>
+        <table class="tabla">
+            <thead><tr><th>Nombre</th><th>Descripción</th><th></th></tr></thead>
+            <tbody>
+            <tr th:each="c : ${categorias}">
+                <td colspan="2">
+                    <form th:action="@{'/admin/catalogos/categorias/' + ${c.id} + '/editar'}" method="post" style="display:flex; gap:8px;">
+                        <input type="text" name="nombre" th:value="${c.nombre}" required style="flex:1;">
+                        <input type="text" name="descripcion" th:value="${c.descripcion}" style="flex:2;">
+                        <button type="submit" class="boton-link">Guardar</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{'/admin/catalogos/categorias/' + ${c.id} + '/eliminar'}" method="post" style="display:inline;"
+                          onsubmit="return confirm('¿Eliminar esta categoría?');">
+                        <button type="submit" class="boton-link">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <form th:action="@{/admin/catalogos/categorias}" method="post" class="formulario">
+            <label>Nueva categoría:</label>
+            <input type="text" name="nombre" placeholder="Ej: Parqueadero" required>
+            <label>Descripción:</label>
+            <input type="text" name="descripcion">
+            <button type="submit">Agregar categoría</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

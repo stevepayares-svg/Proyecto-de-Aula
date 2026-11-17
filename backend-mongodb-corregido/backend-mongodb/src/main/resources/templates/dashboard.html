@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<div class="pagina">
+    <div class="tarjeta tarjeta-ancha">
+        <h1>Panel de administración</h1>
+        <p class="subtitulo">
+            Sesión iniciada como <strong th:text="${email}"></strong>
+            &middot; Rol: <strong th:text="${esEmpleado} ? 'EMPLEADO' : 'CLIENTE'"></strong>
+        </p>
+
+        <div class="resumen-cards">
+            <div class="resumen-card">
+                <span class="resumen-numero" th:text="${totalSolicitudes}"></span>
+                <span class="resumen-etiqueta">Solicitudes totales</span>
+            </div>
+            <div class="resumen-card" sec:authorize="hasRole('EMPLEADO')">
+                <span class="resumen-numero" th:text="${totalClientes}"></span>
+                <span class="resumen-etiqueta">Clientes registrados</span>
+            </div>
+            <div class="resumen-card" sec:authorize="hasRole('EMPLEADO')">
+                <span class="resumen-numero" th:text="${totalEmpleados}"></span>
+                <span class="resumen-etiqueta">Empleados</span>
+            </div>
+        </div>
+
+        <a sec:authorize="hasRole('EMPLEADO')" th:href="@{/solicitudes/todas}" class="boton-link" style="margin-top: 20px; display:inline-block;">
+            Ver y gestionar todas las solicitudes →
+        </a>
+    </div>
+</div>
+</body>
+</html>

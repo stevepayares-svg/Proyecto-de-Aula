@@ -1,0 +1,12 @@
+# Secretos: nunca se suben a GitHub
+.env
+client_secret*.json
+
+# Compilados de Maven y del IDE
+target/
+*.class
+.idea/
+*.iml
+
+# Credenciales locales usadas por VS Code
+.vscode/.env

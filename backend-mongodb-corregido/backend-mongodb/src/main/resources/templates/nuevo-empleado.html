@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Empleado</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<div class="pagina">
+    <div class="tarjeta">
+        <h1>Nuevo empleado</h1>
+        <p class="subtitulo">El empleado puede entrar apenas lo crees. Solo verá las solicitudes de la categoría que le asignes; el administrador ve todas.</p>
+
+        <div th:if="${error}" class="alerta error" th:text="${error}"></div>
+
+        <form th:action="@{/admin/empleados/nuevo}" method="post" class="formulario">
+            <label>Nombre:</label>
+            <input type="text" name="nombre" required>
+
+            <label>Correo:</label>
+            <input type="email" name="email" required>
+
+            <label>Cargo:</label>
+            <select name="cargo" id="cargo" required onchange="mostrarCategoria()">
+                <option value="Empleado">Empleado</option>
+                <option value="Administrador">Administrador (acceso total)</option>
+            </select>
+
+            <div id="bloque-categoria">
+                <label>Categoría que va a atender:</label>
+                <select name="categoriaId" id="categoriaId">
+                    <option value="">Selecciona una categoría</option>
+                    <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombre}"></option>
+                </select>
+            </div>
+
+            <label>Contraseña:</label>
+            <input type="password" name="contrasena" required>
+
+            <button type="submit">Crear empleado</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Si es administrador no hace falta categoría (ve todas).
+    function mostrarCategoria() {
+        var esAdmin = document.getElementById('cargo').value === 'Administrador';
+        document.getElementById('bloque-categoria').style.display = esAdmin ? 'none' : 'block';
+        document.getElementById('categoriaId').required = !esAdmin;
+    }
+    mostrarCategoria();
+</script>
+</body>
+</html>

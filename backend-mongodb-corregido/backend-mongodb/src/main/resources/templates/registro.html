@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro - Sistema de Solicitudes</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div class="contenedor">
+    <h1>Sistema de Gestión de Solicitudes</h1>
+    <h2>Registrarme como cliente</h2>
+
+    <div th:if="${error}" class="alerta error" th:text="${error}"></div>
+
+    <form th:action="@{/registro}" method="post" class="formulario">
+        <label>Nombre:</label>
+        <input type="text" name="nombre" required>
+
+        <label>Correo:</label>
+        <input type="email" name="email" required>
+
+        <label>Teléfono:</label>
+        <input type="text" name="telefono">
+
+        <label>Contraseña:</label>
+        <input type="password" name="contrasena" required>
+
+        <button type="submit">Registrarme</button>
+    </form>
+
+    <p style="margin-top: 15px; font-size: 0.9em;">
+        ¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión</a>
+    </p>
+</div>
+</body>
+</html>

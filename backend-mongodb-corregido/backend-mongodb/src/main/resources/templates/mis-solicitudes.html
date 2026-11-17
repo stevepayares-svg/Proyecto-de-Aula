@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Solicitudes</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<div class="pagina">
+    <div class="tarjeta tarjeta-ancha">
+        <h1>Mis solicitudes</h1>
+
+        <div th:if="${param.creada}" class="alerta ok">
+            Tu solicitud fue enviada correctamente. Un empleado la revisará pronto.
+        </div>
+
+        <p th:if="${#lists.isEmpty(solicitudes)}">Todavía no has radicado ninguna solicitud.</p>
+
+        <table class="tabla" th:unless="${#lists.isEmpty(solicitudes)}">
+            <thead>
+            <tr>
+                <th>Título</th>
+                <th>Tipo</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Respuesta</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="s : ${solicitudes}">
+                <td th:text="${s.titulo}"></td>
+                <td th:text="${s.tipoSolicitud != null ? s.tipoSolicitud.nombre : '-'}"></td>
+                <td th:text="${s.prioridad}"></td>
+                <td>
+                    <span class="badge"
+                          th:classappend="${s.estado == 'ABIERTA'} ? 'badge-abierta' : (${s.estado == 'CERRADA'} ? 'badge-cerrada' : 'badge-proceso')"
+                          th:text="${s.estado}"></span>
+                </td>
+                <td th:text="${#dates.format(s.fechaCreacion, 'dd/MM/yyyy')}"></td>
+                <td th:text="${s.respuestaAdmin != null ? s.respuestaAdmin : 'Sin respuesta todavía'}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a th:href="@{/solicitudes/nueva}" class="boton-link" style="margin-top: 20px; display:inline-block;">
+            + Radicar otra solicitud
+        </a>
+    </div>
+</div>
+</body>
+</html>

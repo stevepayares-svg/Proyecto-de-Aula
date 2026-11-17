@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<nav th:fragment="nav" class="navbar">
+    <div class="navbar-marca">🏋️ BodyTech · PQRSF</div>
+    <div class="navbar-links">
+        <a sec:authorize="hasRole('CLIENTE')" th:href="@{/solicitudes/nueva}">Nueva solicitud</a>
+        <a sec:authorize="hasRole('CLIENTE')" th:href="@{/solicitudes/mias}">Mis solicitudes</a>
+        <a sec:authorize="hasRole('EMPLEADO')" th:href="@{/dashboard}">Dashboard</a>
+        <a sec:authorize="hasRole('EMPLEADO')" th:href="@{/solicitudes/todas}">Todas las solicitudes</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/empleados}">Empleados</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/catalogos}">Catálogos</a>
+        <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="boton-link">Cerrar sesión</button>
+        </form>
+    </div>
+</nav>
+</body>
+</html>

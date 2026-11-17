@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestionar Solicitud</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<div class="pagina">
+    <div class="tarjeta tarjeta-ancha">
+        <h1 th:text="${solicitud.titulo}"></h1>
+        <p class="subtitulo">
+            De: <strong th:text="${solicitud.cliente != null ? solicitud.cliente.nombre : '-'}"></strong>
+            &middot; Tipo: <strong th:text="${solicitud.tipoSolicitud != null ? solicitud.tipoSolicitud.nombre : '-'}"></strong>
+            &middot; Prioridad: <strong th:text="${solicitud.prioridad}"></strong>
+        </p>
+
+        <p><strong>Descripción:</strong></p>
+        <p th:text="${solicitud.descripcion}"></p>
+
+        <ul style="font-size: 0.9em; color: #555;">
+            <li th:if="${solicitud.sede}">Sede: <span th:text="${solicitud.sede}"></span></li>
+            <li th:if="${solicitud.zonaGimnasio}">Zona: <span th:text="${solicitud.zonaGimnasio}"></span></li>
+            <li th:if="${solicitud.maquinaAfectada}">Máquina: <span th:text="${solicitud.maquinaAfectada}"></span></li>
+        </ul>
+
+        <form th:action="@{'/solicitudes/' + ${solicitud.id} + '/gestionar'}" method="post" class="formulario">
+            <label>Estado:</label>
+            <select name="estado">
+                <option value="ABIERTA" th:selected="${solicitud.estado == 'ABIERTA'}">ABIERTA</option>
+                <option value="EN_PROCESO" th:selected="${solicitud.estado == 'EN_PROCESO'}">EN PROCESO</option>
+                <option value="CERRADA" th:selected="${solicitud.estado == 'CERRADA'}">CERRADA</option>
+            </select>
+
+            <label>Respuesta para el cliente:</label>
+            <textarea name="respuestaAdmin" rows="4" th:text="${solicitud.respuestaAdmin}"></textarea>
+
+            <button type="submit">Guardar</button>
+        </form>
+
+        <a th:href="@{/solicitudes/todas}" class="boton-link" style="margin-top: 15px; display:inline-block;">
+            ← Volver a todas las solicitudes
+        </a>
+    </div>
+</div>
+</body>
+</html>

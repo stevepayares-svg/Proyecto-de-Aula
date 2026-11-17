@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>500 - Error interno del servidor</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<div class="contenedor" style="text-align:center;">
+    <div style="font-size:3.5em; font-weight:700; color:#b3261e; line-height:1;">500</div>
+    <h1 style="margin-top:10px;">Error interno del servidor</h1>
+    <div class="alerta error" style="text-align:left;">Ocurrió un error inesperado. Intenta de nuevo más tarde.</div>
+
+    <a sec:authorize="hasRole('CLIENTE')" th:href="@{/solicitudes/nueva}" class="boton-link" style="display:inline-block; margin-top:10px;">Volver a mi menú</a>
+    <a sec:authorize="hasRole('EMPLEADO')" th:href="@{/dashboard}" class="boton-link" style="display:inline-block; margin-top:10px;">Volver al dashboard</a>
+    <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="boton-link" style="display:inline-block; margin-top:10px;">Ir al login</a>
+</div>
+</body>
+</html>

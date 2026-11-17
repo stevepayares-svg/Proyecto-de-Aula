@@ -1,0 +1,156 @@
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f2f4f7;
+    margin: 0;
+    color: #1f2430;
+}
+
+/* Páginas sin navbar (login / registro) */
+body:has(.contenedor) {
+    display: flex;
+    justify-content: center;
+    padding-top: 60px;
+}
+
+.contenedor {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    width: 400px;
+}
+
+.contenedor h1 { font-size: 1.15em; color: #333; margin-bottom: 4px; }
+.contenedor h2 { font-size: 1em; color: #666; margin-top: 0; font-weight: normal; }
+
+/* Navbar */
+.navbar {
+    background: #1f2937;
+    color: #fff;
+    padding: 14px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.navbar-marca { font-weight: 600; font-size: 1.1em; }
+.navbar-links { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.navbar-links a { color: #d1d5db; text-decoration: none; font-size: 0.95em; }
+.navbar-links a:hover { color: #fff; }
+
+/* Layout de páginas internas */
+.pagina { padding: 30px; display: flex; justify-content: center; }
+
+.tarjeta {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    padding: 30px 35px;
+    width: 100%;
+    max-width: 480px;
+}
+.tarjeta-ancha { max-width: 850px; }
+
+.tarjeta h1 { font-size: 1.4em; margin-bottom: 4px; color: #1f2937; }
+.subtitulo { color: #6b7280; margin-top: 0; margin-bottom: 20px; }
+
+/* Formularios */
+.formulario { display: flex; flex-direction: column; }
+.formulario label { margin-top: 14px; font-size: 0.9em; color: #374151; font-weight: 500; }
+.formulario input,
+.formulario select,
+.formulario textarea {
+    padding: 9px 10px;
+    margin-top: 5px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95em;
+}
+.formulario textarea { resize: vertical; }
+
+.fila-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.checkbox-grupo { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
+.checkbox-item {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 6px;
+    font-weight: normal !important;
+    margin-top: 4px !important;
+}
+.checkbox-item input { width: auto; margin: 0; }
+
+button, .formulario button {
+    margin-top: 22px;
+    padding: 11px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95em;
+    cursor: pointer;
+}
+button:hover { background: #1d4ed8; }
+
+.boton-link {
+    background: none;
+    color: #2563eb;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.95em;
+    padding: 8px 14px;
+    border: 1px solid #2563eb;
+    border-radius: 6px;
+    margin-top: 0;
+    display: inline-block;
+}
+.boton-link:hover { background: #eff6ff; }
+
+/* Alertas */
+.alerta { padding: 10px 14px; border-radius: 6px; margin: 10px 0; font-size: 0.9em; }
+.alerta.error { background: #fdecea; color: #b3261e; }
+.alerta.ok { background: #e7f6e7; color: #1e7d1e; }
+
+/* Resumen (dashboard) */
+.resumen-cards { display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }
+.resumen-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 18px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 130px;
+}
+.resumen-numero { font-size: 1.8em; font-weight: 700; color: #2563eb; }
+.resumen-etiqueta { font-size: 0.85em; color: #6b7280; margin-top: 4px; text-align: center; }
+
+/* Tabla */
+.tabla { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.92em; }
+.tabla th, .tabla td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #e5e7eb; }
+.tabla th { color: #6b7280; font-weight: 600; font-size: 0.85em; text-transform: uppercase; }
+
+/* Badges de estado */
+.badge { padding: 3px 10px; border-radius: 999px; font-size: 0.8em; font-weight: 600; }
+.badge-abierta { background: #fef3c7; color: #92400e; }
+.badge-proceso { background: #dbeafe; color: #1e40af; }
+.badge-cerrada { background: #d1fae5; color: #065f46; }
+
+/* ---------- Login con Google ---------- */
+.separador-login { display: flex; align-items: center; gap: 10px; color: #999; font-size: 0.85em; margin: 16px 0 12px; }
+.separador-login::before, .separador-login::after { content: ""; flex: 1; height: 1px; background: #ddd; }
+.boton-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+                padding: 10px 14px; border: 1px solid #ccc; border-radius: 6px; background: #fff;
+                color: #333; font-weight: 600; text-decoration: none; box-sizing: border-box; }
+.boton-google:hover { background: #f5f5f5; }
+
+/* Filtro de prioridad en la lista de solicitudes */
+.filtro-prioridad { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 10px 0 5px; }
+.filtro-prioridad label { margin: 0; font-weight: 600; }
+.filtro-prioridad select { width: auto; margin: 0; }
+.filtro-prioridad button { width: auto; margin: 0; padding: 8px 16px; }
